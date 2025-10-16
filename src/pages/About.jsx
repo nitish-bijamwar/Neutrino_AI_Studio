@@ -1,22 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import vicebot from "../assets/vicebot.jpg";
-import genai from "../assets/genAi.jpg";
-import Navbar from "../component/Navbar";
-
+import vicebot from "../assets/vicebot.webp";
+ import genai from "../assets/genAi.jpg";
+// import Navbar from "../component/Navbar";
+ 
 export default function AboutUs() {
   const navigate = useNavigate();
-
+ 
   const handleVisitOfficial = () => {
     window.open("https://neutrinotechsystems.com/#", "_blank");
   };
-
+ 
   return (
-
-    
+ 
+   
     <div className="bg-gray-900 text-white min-h-screen flex flex-col">
        {/* Navbar */}
-      <Navbar />
+     
       {/* Hero / Header */}
       <header className="bg-gradient-to-r from-blue-800 via-indigo-900 to-purple-900 py-16 px-8 text-center">
         <h1 className="text-5xl font-extrabold mb-4">About Neutrino AI Studio</h1>
@@ -24,7 +24,7 @@ export default function AboutUs() {
           At Neutrino AI Studio (Neutrino Tech Systems), we believe in blending innovation with purpose. Our mission is to harness AI, automation, and data-driven intelligence to empower businesses — especially in healthcare, analytics, and enterprise automation.
         </p>
       </header>
-
+ 
       {/* Mission & Vision */}
       <section className="py-12 px-8 md:px-16 flex flex-col md:flex-row items-center md:items-start gap-8">
         <div className="md:w-1/2">
@@ -40,7 +40,7 @@ export default function AboutUs() {
           </p>
         </div>
       </section>
-
+ 
       {/* Core Values / Pillars */}
       <section className="bg-gray-800 py-16 px-8 md:px-16">
         <h2 className="text-3xl font-semibold text-center mb-12">Core Values</h2>
@@ -59,7 +59,7 @@ export default function AboutUs() {
           </div>
         </div>
       </section>
-
+ 
       {/* Experience / Achievements */}
       <section className="py-16 px-8 md:px-16">
         <h2 className="text-3xl font-semibold text-center mb-10">What We’ve Delivered</h2>
@@ -88,7 +88,7 @@ export default function AboutUs() {
               </p>
             </div>
           </div>
-
+ 
           <div className="flex flex-col md:flex-row-reverse items-center gap-6">
             <div className="md:w-1/2">
               <img
@@ -115,7 +115,7 @@ export default function AboutUs() {
           </div>
         </div>
       </section>
-
+ 
       {/* Call to Action / Redirect to Official */}
       <section className="py-16 px-8 md:px-16 text-center">
         <h2 className="text-3xl font-semibold mb-6">Ready to Explore More?</h2>
@@ -129,3 +129,4 @@ export default function AboutUs() {
     </div>
   );
 }
+ 
