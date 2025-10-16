@@ -1,52 +1,58 @@
-import { BrowserRouter as Router } from "react-router-dom";
+
+import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./component/Navbar";
 import Footer from "./component/Footer";
-import Sidebar from "./component/Sidebar"; // 🆕 Import Sidebar
+import Sidebar from "./component/Sidebar";
+import HomeContent from "./component/Home";
+import UseCases from "./component/useCases";
+import AboutUs from "./pages/About";
 import "./App.css";
 
 function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <Router>
-      {/* Full-page layout container */}
-      <div className="flex flex-col h-screen bg-[#0e0e11] text-white">
-        
-        {/* Top Navbar */}
-        <Navbar />
+      {/* Main wrapper with full black background */}
+      <div className="min-h-screen flex flex-col bg-[#0e0e11] text-white">
+        {/* Navbar - fixed on top */}
+        <div className="fixed top-0 left-0 right-0 z-20">
+          <Navbar
+            onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            setSearchTerm={setSearchTerm}
+          />
+        </div>
 
-        {/* Middle section with sidebar + main content */}
-        <div className="flex flex-1">
-          {/* Left Sidebar */}
-          <Sidebar />
+        {/* Main content section */}
+        <div className="flex flex-1 pt-20 pb-20 relative bg-[#0e0e11]">
+          <Sidebar
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
+          />
 
-          {/* Main content area */}
-          <main className="flex-1 p-10 overflow-y-auto">
-            <h1 className="text-5xl font-extrabold text-center mb-6">
-              <span className="text-orange-500">Neutrino</span>Vation
-            </h1>
-            <p className="text-center text-xl mb-8">
-              Discover AI-powered solutions for your business needs
-            </p>
-
-            <div className="flex justify-center">
-              <input
-                type="text"
-                placeholder="Search use cases"
-                className="bg-gray-800 text-gray-300 px-4 py-2 rounded-l-md w-72 focus:outline-none"
+          {/* Scrollable main content */}
+          <main
+            className={`flex-1 p-10 overflow-y-auto bg-[#0e0e11] transition-all duration-300 ${
+              isSidebarOpen ? "filter blur-sm" : ""
+            }`}
+          >
+            <Routes>
+              <Route path="/" element={<HomeContent />} />
+              <Route
+                path="/use-cases"
+                element={<UseCases searchTerm={searchTerm} />}
               />
-              <button className="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-r-md">
-                Search
-              </button>
-            </div>
-
-            <div className="flex justify-center mt-8">
-              <button className="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-md font-semibold">
-                Explore Use Cases
-              </button>
-            </div>
+               <Route
+                path="/about"
+                element={<AboutUs/>}
+              />
+            </Routes>
           </main>
         </div>
 
-        {/* Footer at bottom */}
+        {/* Footer - fixed color */}
         <Footer />
       </div>
     </Router>
