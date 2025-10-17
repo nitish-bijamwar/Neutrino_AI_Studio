@@ -1,42 +1,4 @@
 
-
-
-// // src/component/UseCases.jsx
-// import { useState, useEffect } from "react";
-// import UseCaseCard from "./UseCaseCard";
-// import { useCasesData } from "./UseCasesData"
-// export default function UseCases({ searchTerm }) {
-//   const [filteredCases, setFilteredCases] = useState(useCasesData);
-
-//   useEffect(() => {
-//     if (!searchTerm) {
-//       setFilteredCases(useCasesData);
-//     } else {
-//       const query = searchTerm.toLowerCase().replace(/\s+/g, "");
-//       const filtered = useCasesData.filter(uc =>
-//         uc.title.toLowerCase().replace(/\s+/g, "").includes(query)
-//       );
-//       setFilteredCases(filtered);
-//     }
-//   }, [searchTerm]);
-
-//   return (
-//     <div className="w-full max-w-6xl mx-auto py-10">
-//       <h1 className="text-4xl font-extrabold text-center text-orange-500 mb-10">Our Use Cases</h1>
-//       <div className="flex flex-wrap gap-8 justify-center">
-//         {filteredCases.length > 0 ? (
-//           filteredCases.map(uc => <UseCaseCard key={uc.id} {...uc} />)
-//         ) : (
-//           <p className="text-gray-400 text-xl">No use cases found.</p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
 import { useLocation } from "react-router-dom";
 import UseCaseCard from "./UseCaseCard";
 import { useCasesData } from "./UseCasesData";
@@ -53,9 +15,16 @@ export default function UseCases() {
 
   return (
     <div className="w-full max-w-6xl mx-auto py-10">
-      <h1 className="text-4xl font-extrabold text-center text-orange-500 mb-10">
-        Our Use Cases
-      </h1>
+
+     <h2 className="text-2xl text-center text-orange-300 font-bold mb-4 tracking-wide drop-shadow-sm">
+  Explore AI Solutions for Your Business
+</h2>
+        <h1 className="text-5xl font-extrabold text-center mb-10 
+  bg-gradient-to-r from-orange-300 via-orange-400 to-orange-700
+  bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(255,140,0,0.5)]
+  tracking-wide">
+   Our Use Cases
+</h1>
 
       {filteredUseCases.length === 0 ? (
         <p className="text-center text-gray-400">No use case found.</p>
