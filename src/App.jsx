@@ -8,6 +8,9 @@ import HomeContent from "./component/Home";
 import UseCases from "./component/useCases";
 import AboutUs from "./pages/About";
 import "./App.css";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Contact from "./pages/Contact";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -34,9 +37,8 @@ function App() {
 
           {/* Scrollable main content */}
           <main
-            className={`flex-1 p-10 overflow-y-auto bg-[#0e0e11] transition-all duration-300 ${
-              isSidebarOpen ? "filter blur-sm" : ""
-            }`}
+            className={`flex-1 p-10 overflow-y-auto bg-[#0e0e11] transition-all duration-300 ${isSidebarOpen ? "filter blur-sm" : ""
+              }`}
           >
             <Routes>
               <Route path="/" element={<HomeContent />} />
@@ -44,10 +46,22 @@ function App() {
                 path="/use-cases"
                 element={<UseCases searchTerm={searchTerm} />}
               />
-               <Route
+              <Route
                 path="/about"
-                element={<AboutUs/>}
+                element={<AboutUs />}
               />
+              <Route
+                path="/login"
+                element={<Login />}
+              />
+              <Route
+                path="/signup"
+                element={<Signup />}
+              />
+              <Route path="/contact"
+               element={<Contact />}
+                />
+
             </Routes>
           </main>
         </div>

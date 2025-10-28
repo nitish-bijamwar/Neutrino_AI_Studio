@@ -1,91 +1,122 @@
-import { useState } from "react";
-// import { auth, db } from "../services/firebase";
-// import { createUserWithEmailAndPassword } from "firebase/auth";
-// import { doc, setDoc } from "firebase/firestore";
+import React, { useState } from "react";
+import { auth, db } from "../firebase.js";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaUserShield } from "react-icons/fa";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(""); // ✅ Message for success/error
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
     try {
+      // ✅ Create user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      await setDoc(doc(db, "users", user.uid), { email, role });
+      // ✅ Store user details in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        email,
+        role,
+        createdAt: new Date(),
+      });
 
-      alert("Signup successful! Please log in.");
-      navigate("/login");
+      // ✅ Display success message and redirect
+      setMessage("✅ Account created successfully! Redirecting to login...");
+      setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
-      alert(error.message);
+      // ❌ Handle errors gracefully
+      setMessage(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const redirectToLogin = () => navigate("/login");
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#0b1120] via-[#0f1020] to-[#020617] px-4">
-      <div className="w-full max-w-md bg-gray-900/80 text-gray-200 rounded-3xl shadow-2xl p-8 sm:p-10 border border-gray-700 backdrop-blur-md">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center text-orange-500 mb-6 drop-shadow-lg">
-          AI Studio Signup
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0b1120] via-[#111827] to-[#020617] px-4">
+      <div className="w-full max-w-md bg-gray-900 text-gray-200 rounded-3xl shadow-2xl p-8 border border-gray-700">
+        <h2 className="text-3xl font-bold text-center text-orange-500 mb-6">
+          Create Neutrino Account
         </h2>
 
+        {/* Signup Form */}
         <form onSubmit={handleSignup} className="space-y-5">
+          {/* Email Field */}
           <div className="relative">
             <FaEnvelope className="absolute top-3 left-3 text-gray-400" />
             <input
               type="email"
               placeholder="Email"
+              className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-orange-500 focus:outline-none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 text-gray-200 placeholder-gray-500 transition"
             />
           </div>
 
+          {/* Password Field */}
           <div className="relative">
             <FaLock className="absolute top-3 left-3 text-gray-400" />
             <input
               type="password"
               placeholder="Password"
+              className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-orange-500 focus:outline-none"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 text-gray-200 placeholder-gray-500 transition"
             />
           </div>
 
+          {/* Role Dropdown */}
           <div className="relative">
-            <FaUser className="absolute top-3 left-3 text-gray-400" />
+            <FaUserShield className="absolute top-3 left-3 text-gray-400" />
             <select
+              className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-gray-200 focus:ring-2 focus:ring-orange-500 focus:outline-none"
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 text-gray-200 transition"
             >
               <option value="user">User</option>
-              <option value="lawyer">Lawyer</option>
               <option value="admin">Admin</option>
             </select>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-orange-500 to-yellow-400 hover:from-yellow-400 hover:to-orange-500 text-gray-900 font-semibold text-lg shadow-lg transition duration-300"
+            disabled={loading}
+            className={`w-full py-3 rounded-xl bg-gradient-to-r from-orange-500 to-yellow-400 hover:from-yellow-400 hover:to-orange-500 text-gray-900 font-semibold text-lg shadow-lg transition duration-300 ${
+              loading ? "opacity-70 cursor-not-allowed" : ""
+            }`}
           >
-            Sign Up
+            {loading ? "Creating..." : "Sign Up"}
           </button>
         </form>
 
+        {/* ✅ Success/Error Message */}
+        {message && (
+          <p
+            className={`mt-4 text-center font-medium ${
+              message.includes("successfully") ? "text-green-400" : "text-red-400"
+            }`}
+          >
+            {message}
+          </p>
+        )}
+
+        {/* Redirect to Login */}
         <p className="text-center text-sm text-gray-400 mt-6">
           Already have an account?{" "}
           <button
-            type="button"
-            onClick={redirectToLogin}
+            onClick={() => navigate("/login")}
             className="text-orange-500 font-medium hover:underline"
           >
             Login
