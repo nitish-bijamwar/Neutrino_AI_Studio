@@ -11,6 +11,7 @@ import "./App.css";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Contact from "./pages/Contact";
+import ForgetPassword from"./pages/ForgetPassword";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -58,6 +59,10 @@ function App() {
                 path="/signup"
                 element={<Signup />}
               />
+              <Route 
+              path="/forgot-password" 
+              element={<ForgetPassword />}
+             />
               <Route path="/contact"
                element={<Contact />}
                 />
