@@ -59,8 +59,10 @@ export default function Sidebar({ isOpen, onClose }) {
           <FaInfoCircle /> <span>About</span>
         </li>
 
-        <li className="flex items-center space-x-3 hover:text-orange-500 cursor-pointer">
-          <FaEnvelope /> <span>Contact</span>
+        <li className="flex items-center space-x-3 hover:text-orange-500 cursor-pointer"
+          onClick={() => handleNavigation("/contact")}
+         >
+           <FaEnvelope /> <span>Contact</span>
         </li>
 
         <li
