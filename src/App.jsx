@@ -1,78 +1,55 @@
-
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./component/Navbar";
-import Footer from "./component/Footer";
 import Sidebar from "./component/Sidebar";
 import HomeContent from "./component/Home";
 import UseCases from "./component/useCases";
 import AboutUs from "./pages/About";
-import "./App.css";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Contact from "./pages/Contact";
-import ForgetPassword from"./pages/ForgetPassword";
+import ForgetPassword from "./pages/ForgetPassword";
+import UseCaseDetails from "./component/UseCaseDetails";
+import Navbar from "./component/Navbar";
+import "./App.css";
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // 👈 open by default
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <Router>
-      {/* Main wrapper with full black background */}
-      <div className="min-h-screen flex flex-col bg-[#0e0e11] text-white">
-        {/* Navbar - fixed on top */}
-        <div className="fixed top-0 left-0 right-0 z-20">
-          <Navbar
-            onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            setSearchTerm={setSearchTerm}
-          />
-        </div>
+      <div className="min-h-screen flex bg-white text-gray-900 transition-all duration-300">
+        {/* Sidebar */}
+        <Sidebar
+          isOpen={isSidebarOpen}
+          toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
 
-        {/* Main content section */}
-        <div className="flex flex-1 pt-20 pb-20 relative bg-[#0e0e11]">
-          <Sidebar
-            isOpen={isSidebarOpen}
-            onClose={() => setIsSidebarOpen(false)}
-          />
+        {/* Main content adjusts based on sidebar */}
+        <main
+          className={`flex-1 transition-all duration-300 p-6 ${
+            isSidebarOpen ? "ml-64" : "ml-16"
+          }`}
+        >
 
-          {/* Scrollable main content */}
-          <main
-            className={`flex-1 p-10 overflow-y-auto bg-[#0e0e11] transition-all duration-300 ${isSidebarOpen ? "filter blur-sm" : ""
-              }`}
-          >
-            <Routes>
-              <Route path="/" element={<HomeContent />} />
-              <Route
-                path="/use-cases"
-                element={<UseCases searchTerm={searchTerm} />}
-              />
-              <Route
-                path="/about"
-                element={<AboutUs />}
-              />
-              <Route
-                path="/login"
-                element={<Login />}
-              />
-              <Route
-                path="/signup"
-                element={<Signup />}
-              />
-              <Route 
-              path="/forgot-password" 
-              element={<ForgetPassword />}
-             />
-              <Route path="/contact"
-               element={<Contact />}
-                />
-
-            </Routes>
-          </main>
-        </div>
-
-        {/* Footer - fixed color */}
-        <Footer />
+           {/* ✅ Navbar at the top of main area */}
+          <div className="mb-6">
+            <Navbar />
+          </div>
+          <Routes>
+            <Route path="/" element={<UseCases />} />
+            <Route
+              path="/use-cases"
+              element={<UseCases searchTerm={searchTerm} />}
+            />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgetPassword />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/usecase/details/:id" element={<UseCaseDetails />} />
+          </Routes>
+        </main>
       </div>
     </Router>
   );

@@ -39,56 +39,54 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#020617] via-[#0b1120] to-[#111827] relative overflow-hidden px-4">
-
-      {/* ✨ Animated Background Lights */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_#ff8800_0%,_transparent_40%),_radial-gradient(circle_at_bottom_right,_#ffcc00_0%,_transparent_40%)] opacity-30 animate-pulse"></div>
-
+    <div className="min-h-screen flex items-center justify-center bg-white px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-md bg-gray-900/70 backdrop-blur-xl text-gray-200 rounded-3xl shadow-2xl p-8 border border-gray-700/50 relative z-10"
+        className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 border border-gray-200"
       >
-        <h2 className="text-3xl font-bold text-center text-orange-400 mb-2 tracking-wide">
+        {/* Header */}
+        <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent mb-2">
           Join Neutrino 🚀
         </h2>
-        <p className="text-center text-gray-400 mb-6 text-sm">
+        <p className="text-center text-gray-600 mb-6 text-sm">
           Create your account to explore AI-powered experiences
         </p>
 
+        {/* Form */}
         <form onSubmit={handleSignup} className="space-y-5">
-          {/* Email Field */}
-          <div className="relative group">
-            <FaEnvelope className="absolute top-3 left-3 text-gray-400 group-hover:text-orange-400 transition" />
+          {/* Email */}
+          <div className="relative">
+            <FaEnvelope className="absolute top-3.5 left-3 text-gray-400" />
             <input
               type="email"
               placeholder="Email"
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800/70 border border-gray-700 focus:ring-2 focus:ring-orange-500 focus:outline-none text-gray-200 placeholder-gray-400 transition"
+              className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800 placeholder-gray-400 transition"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
 
-          {/* Password Field */}
-          <div className="relative group">
-            <FaLock className="absolute top-3 left-3 text-gray-400 group-hover:text-orange-400 transition" />
+          {/* Password */}
+          <div className="relative">
+            <FaLock className="absolute top-3.5 left-3 text-gray-400" />
             <input
               type="password"
               placeholder="Password"
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800/70 border border-gray-700 focus:ring-2 focus:ring-orange-500 focus:outline-none text-gray-200 placeholder-gray-400 transition"
+              className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800 placeholder-gray-400 transition"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
 
-          {/* Role Dropdown */}
-          <div className="relative group">
-            <FaUserShield className="absolute top-3 left-3 text-gray-400 group-hover:text-orange-400 transition" />
+          {/* Role */}
+          <div className="relative">
+            <FaUserShield className="absolute top-3.5 left-3 text-gray-400" />
             <select
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800/70 border border-gray-700 text-gray-200 focus:ring-2 focus:ring-orange-500 focus:outline-none transition"
+              className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
               value={role}
               onChange={(e) => setRole(e.target.value)}
             >
@@ -97,13 +95,13 @@ export default function Signup() {
             </select>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit */}
           <motion.button
             type="submit"
             disabled={loading}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className={`w-full py-3 rounded-xl bg-gradient-to-r from-orange-500 to-yellow-400 hover:from-yellow-400 hover:to-orange-500 text-gray-900 font-semibold text-lg shadow-lg transition duration-300 ${
+            className={`w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 hover:from-blue-500 hover:to-purple-600 text-white font-semibold text-lg shadow-md transition duration-300 ${
               loading ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >
@@ -115,19 +113,19 @@ export default function Signup() {
         {message && (
           <p
             className={`mt-4 text-center font-medium ${
-              message.includes("successfully") ? "text-green-400" : "text-red-400"
+              message.includes("successfully") ? "text-green-600" : "text-red-600"
             }`}
           >
             {message}
           </p>
         )}
 
-        {/* Redirect to Login */}
-        <p className="text-center text-sm text-gray-400 mt-6">
+        {/* Redirect */}
+        <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}
           <button
             onClick={() => navigate("/login")}
-            className="text-orange-400 font-medium hover:underline"
+            className="text-blue-600 font-medium hover:underline"
           >
             Login
           </button>

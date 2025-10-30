@@ -1,4 +1,3 @@
-
 import {
   FaHome,
   FaBriefcase,
@@ -6,72 +5,90 @@ import {
   FaInfoCircle,
   FaEnvelope,
   FaLock,
-  FaTimes,
+  FaChevronLeft,
+  FaChevronRight,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-export default function Sidebar({ isOpen, onClose }) {
+export default function Sidebar({ isOpen, toggleSidebar }) {
   const navigate = useNavigate();
 
-  // Helper to navigate and close sidebar (for mobile)
   const handleNavigation = (path) => {
     navigate(path);
-    onClose();
   };
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-full w-60 bg-gray-900 text-gray-200 flex flex-col py-6 border-r border-gray-700 transform transition-transform duration-300 z-30 ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
+      className={`fixed top-0 left-0 h-full bg-white border-r border-gray-200 shadow-xl z-30 transition-all duration-300 ${
+        isOpen ? "w-64" : "w-16"
       }`}
     >
-      {/* Close button for mobile */}
-      <div className="flex justify-end px-4">
-        <button onClick={onClose} className="text-gray-400 hover:text-white">
-          <FaTimes />
-        </button>
+      {/* Toggle Arrow */}
+      <button
+        onClick={toggleSidebar}
+        className="absolute -right-4 top-6 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-full p-2 shadow-lg transition-transform hover:scale-110"
+      >
+        {isOpen ? <FaChevronLeft /> : <FaChevronRight />}
+      </button>
+
+      <div className="flex flex-col h-full py-6">
+        {/* Logo / Title */}
+        <div className="text-center font-bold text-xl text-purple-700 mb-8">
+          {isOpen ? "Neutrino AI" : "N"}
+        </div>
+
+        {/* Sidebar Links */}
+        <ul className="space-y-5 px-4 font-medium">
+          <li
+            onClick={() => handleNavigation("/")}
+            className="flex items-center gap-3 hover:text-purple-600 cursor-pointer"
+          >
+            <FaHome className="text-blue-500" />
+            {isOpen && <span>Home</span>}
+          </li>
+          <li
+            onClick={() => handleNavigation("/use-cases")}
+            className="flex items-center gap-3 hover:text-purple-600 cursor-pointer"
+          >
+            <FaBriefcase className="text-purple-500" />
+            {isOpen && <span>Use Cases</span>}
+          </li>
+          <li
+            onClick={() => handleNavigation("/workspace")}
+            className="flex items-center gap-3 hover:text-purple-600 cursor-pointer"
+          >
+            <FaLayerGroup className="text-blue-500" />
+            {isOpen && <span>Workspace</span>}
+          </li>
+
+          <div className="border-t border-gray-200 my-3"></div>
+
+          <li
+            onClick={() => handleNavigation("/about")}
+            className="flex items-center gap-3 hover:text-purple-600 cursor-pointer"
+          >
+            <FaInfoCircle className="text-purple-500" />
+            {isOpen && <span>About</span>}
+          </li>
+          <li
+            onClick={() => handleNavigation("/contact")}
+            className="flex items-center gap-3 hover:text-purple-600 cursor-pointer"
+          >
+            <FaEnvelope className="text-blue-500" />
+            {isOpen && <span>Contact</span>}
+          </li>
+          <li
+            onClick={() => handleNavigation("/login")}
+            className="flex items-center gap-3 hover:text-purple-600 cursor-pointer"
+          >
+            <FaLock className="text-purple-600" />
+            {isOpen && <span>Login</span>}
+          </li>
+        </ul>
+
+        {/* Footer Gradient Strip */}
+        <div className="mt-auto mx-4 my-4 h-1 rounded-full bg-gradient-to-r from-purple-600 to-blue-500"></div>
       </div>
-
-      <ul className="space-y-4 px-6 mt-4">
-        <li
-          className="flex items-center space-x-3 hover:text-orange-500 cursor-pointer"
-          onClick={() => handleNavigation("/")}
-        >
-          <FaHome /> <span>Home</span>
-        </li>
-
-        <li
-          className="flex items-center space-x-3 hover:text-orange-500 cursor-pointer"
-          onClick={() => handleNavigation("/use-cases")}
-        >
-          <FaBriefcase /> <span>Use Cases</span>
-        </li>
-
-        <li className="flex items-center space-x-3 hover:text-orange-500 cursor-pointer">
-          <FaLayerGroup /> <span>Workspace</span>
-        </li>
-
-        <div className="border-t border-gray-700 my-3"></div>
-
-        <li className="flex items-center space-x-3 hover:text-orange-500 cursor-pointer"
-        onClick={() => handleNavigation("/about")}
-        >
-          <FaInfoCircle /> <span>About</span>
-        </li>
-
-        <li className="flex items-center space-x-3 hover:text-orange-500 cursor-pointer"
-          onClick={() => handleNavigation("/contact")}
-         >
-           <FaEnvelope /> <span>Contact</span>
-        </li>
-
-        <li
-          className="flex items-center space-x-3 hover:text-orange-500 cursor-pointer"
-          onClick={() => handleNavigation("/login")}
-        >
-          <FaLock /> <span>Login</span>
-        </li>
-      </ul>
     </aside>
   );
 }

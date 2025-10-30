@@ -1,11 +1,8 @@
 import { useEffect } from "react";
 
 export default function ProfileModal({ isOpen, onClose, profile }) {
-  // Close on ESC key
   useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === "Escape") onClose();
-    };
+    const handleEsc = (e) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
   }, [onClose]);
@@ -14,42 +11,42 @@ export default function ProfileModal({ isOpen, onClose, profile }) {
 
   return (
     <>
-      {/* Background overlay with blur */}
+      {/* Background overlay */}
       <div
         className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-40"
-        onClick={onClose} // close if clicked outside modal
+        onClick={onClose}
       ></div>
 
-      {/* Modal container */}
+      {/* Modal box */}
       <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl shadow-lg w-96 p-6 relative">
+        <div className="bg-white text-gray-800 rounded-2xl shadow-2xl w-96 p-6 relative border border-gray-100">
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200"
+            className="absolute top-3 right-3 text-gray-500 hover:text-purple-600 text-lg"
           >
             ✕
           </button>
 
-          {/* Profile Photo */}
+          {/* Profile Image */}
           <div className="flex justify-center mb-4">
             <img
               src={profile.photo}
               alt="Profile"
-              className="w-24 h-24 rounded-full object-cover border-2 border-orange-500"
+              className="w-24 h-24 rounded-full object-cover border-4 border-gradient-to-r from-purple-500 to-blue-500"
             />
           </div>
 
           {/* Profile Info */}
-          <div className="text-center space-y-2 mb-6">
-            <h2 className="text-xl font-bold">{profile.name}</h2>
-            <p className="text-gray-600 dark:text-gray-300">{profile.email}</p>
-            <p className="text-gray-600 dark:text-gray-300">{profile.position}</p>
+          <div className="text-center mb-6 space-y-1">
+            <h2 className="text-xl font-bold text-purple-700">{profile.name}</h2>
+            <p className="text-gray-600">{profile.email}</p>
+            <p className="text-blue-600">{profile.position}</p>
           </div>
 
-          {/* Reset Password Button */}
+          {/* Button */}
           <div className="flex justify-center">
-            <button className="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-md font-semibold text-white">
+            <button className="bg-gradient-to-r from-purple-600 to-blue-500 hover:opacity-90 transition-all px-4 py-2 rounded-md font-semibold text-white shadow-md">
               Reset Password
             </button>
           </div>

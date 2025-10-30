@@ -10,7 +10,6 @@ export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Add a small delay for fade-in animation
     const timer = setTimeout(() => setIsVisible(true), 100);
     if (auth.currentUser) {
       setUserMessage(`You are already logged in as ${auth.currentUser.email}`);
@@ -40,57 +39,63 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen w-full bg-gradient-to-br from-gray-900 via-black to-gray-800">
+    <div className="flex justify-center items-center h-screen w-full bg-white">
       <form
         onSubmit={handleLogin}
-        className={`bg-gray-900/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl w-full max-w-md transform transition-all duration-700 ${
+        className={`bg-white border border-gray-200 p-8 rounded-2xl shadow-2xl w-full max-w-md transform transition-all duration-700 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <h2 className="text-4xl font-bold text-orange-500 mb-6 text-center tracking-wide">
+        {/* Title */}
+        <h2 className="text-4xl font-extrabold text-center mb-6 bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-600 bg-clip-text text-transparent tracking-wide">
           Welcome Back
         </h2>
 
+        {/* Already logged in message */}
         {userMessage && (
-          <p className="text-green-400 text-center mb-4">{userMessage}</p>
+          <p className="text-blue-600 text-center mb-4 font-medium">{userMessage}</p>
         )}
 
+        {/* Email input */}
         <div className="flex flex-col mb-4">
-          <label className="text-gray-300 mb-1">Email</label>
+          <label className="text-gray-700 mb-1 font-medium">Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
-            className="p-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-200"
+            className="p-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200"
             required
           />
         </div>
 
+        {/* Password input */}
         <div className="flex flex-col mb-6">
-          <label className="text-gray-300 mb-1">Password</label>
+          <label className="text-gray-700 mb-1 font-medium">Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
-            className="p-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-200"
+            className="p-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200"
             required
           />
         </div>
 
+        {/* Login button */}
         <button
           type="submit"
-          className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg w-full transition-transform duration-200 hover:scale-105 shadow-md"
+          className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-semibold py-3 px-4 rounded-lg w-full transition-transform duration-200 hover:scale-105 shadow-md"
         >
           Login
         </button>
 
-        <p className="text-gray-400 text-center mt-4 text-sm">
+        {/* Footer */}
+        <p className="text-gray-600 text-center mt-4 text-sm">
           Don’t have an account?{" "}
           <a
             href="/signup"
-            className="text-orange-400 hover:underline hover:text-orange-500 transition-colors"
+            className="text-blue-600 font-medium hover:underline hover:text-purple-600 transition-colors"
           >
             Sign up
           </a>
