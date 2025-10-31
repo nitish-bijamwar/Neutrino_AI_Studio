@@ -40,7 +40,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
         {/* Sidebar Links */}
         <ul className="space-y-5 px-4 font-medium">
           <li
-            onClick={() => handleNavigation("/")}
+            onClick={() => handleNavigation("/HomeContent")}
             className="flex items-center gap-3 hover:text-purple-600 cursor-pointer"
           >
             <FaHome className="text-blue-500" />
@@ -53,13 +53,13 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
             <FaBriefcase className="text-purple-500" />
             {isOpen && <span>Use Cases</span>}
           </li>
-          <li
+          {/* <li
             onClick={() => handleNavigation("/workspace")}
             className="flex items-center gap-3 hover:text-purple-600 cursor-pointer"
           >
             <FaLayerGroup className="text-blue-500" />
             {isOpen && <span>Workspace</span>}
-          </li>
+          </li> */}
 
           <div className="border-t border-gray-200 my-3"></div>
 

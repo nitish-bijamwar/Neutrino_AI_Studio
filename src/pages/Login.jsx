@@ -19,19 +19,40 @@ export default function Login() {
     setMessage("");
 
     try {
+      // Step 1: Authenticate the user
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+
+      // Step 2: Fetch user details from Firestore
       const userDoc = await getDoc(doc(db, "users", user.uid));
+
+      if (!userDoc.exists()) {
+        setMessage("❌ No user data found. Please contact support.");
+        return;
+      }
+
       const userData = userDoc.data();
 
-      if (userData?.role === "admin") {
+      // ✅ Step 3: Save user info to sessionStorage
+      sessionStorage.setItem(
+        "user",
+        JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          role: userData.role,
+        })
+      );
+
+      // Step 4: Role-based navigation
+      if (userData.role === "admin") {
         setMessage("✅ Login successful! Redirecting to Admin Dashboard...");
         setTimeout(() => navigate("/admin-dashboard"), 2000);
       } else {
-        setMessage("✅ Login successful! Redirecting to User Dashboard...");
-        setTimeout(() => navigate("/user-dashboard"), 2000);
+        setMessage("✅ Login successful!");
+        setTimeout(() => navigate("/use-cases"), 2000);
       }
     } catch (error) {
+      console.error("Login error:", error);
       setMessage("❌ " + error.message);
     } finally {
       setLoading(false);
@@ -46,7 +67,6 @@ export default function Login() {
         transition={{ duration: 0.6 }}
         className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 border border-gray-200"
       >
-        {/* Header */}
         <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent mb-2">
           Welcome Back 👋
         </h2>
@@ -54,9 +74,7 @@ export default function Login() {
           Login to continue exploring Neutrino AI Studio
         </p>
 
-        {/* Login Form */}
         <form onSubmit={handleLogin} className="space-y-5">
-          {/* Email */}
           <div className="relative">
             <FaEnvelope className="absolute top-3.5 left-3 text-gray-400" />
             <input
@@ -69,7 +87,6 @@ export default function Login() {
             />
           </div>
 
-          {/* Password */}
           <div className="relative">
             <FaLock className="absolute top-3.5 left-3 text-gray-400" />
             <input
@@ -82,7 +99,6 @@ export default function Login() {
             />
           </div>
 
-          {/* Forgot Password */}
           <div className="text-right">
             <button
               type="button"
@@ -93,7 +109,6 @@ export default function Login() {
             </button>
           </div>
 
-          {/* Submit Button */}
           <motion.button
             type="submit"
             disabled={loading}
@@ -107,7 +122,6 @@ export default function Login() {
           </motion.button>
         </form>
 
-        {/* Message */}
         {message && (
           <p
             className={`mt-4 text-center font-medium ${
@@ -118,7 +132,6 @@ export default function Login() {
           </p>
         )}
 
-        {/* Signup Redirect */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Don’t have an account?{" "}
           <button

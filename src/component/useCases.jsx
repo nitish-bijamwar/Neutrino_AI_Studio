@@ -120,7 +120,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import UseCaseCard from "./UseCaseCard";
-import { useCasesData } from "./useCasesData";
+import { useCasesData } from "./UseCasesData";
 import UseCaseDetails from "./UseCaseDetails";
 
 export default function UseCases() {

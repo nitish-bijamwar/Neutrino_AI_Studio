@@ -42,6 +42,7 @@ function App() {
               path="/use-cases"
               element={<UseCases searchTerm={searchTerm} />}
             />
+             <Route path="/HomeContent" element={<HomeContent />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

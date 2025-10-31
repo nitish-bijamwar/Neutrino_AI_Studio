@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { auth, db } from "../firebase.js";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaUserShield } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -20,18 +20,26 @@ export default function Signup() {
     setMessage("");
 
     try {
+      // Step 1: Create user with email/password
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      // Step 2: Optional — update Firebase Auth displayName
+      await updateProfile(user, { displayName: role });
+
+      // Step 3: Save full info to Firestore
       await setDoc(doc(db, "users", user.uid), {
-        email,
-        role,
-        createdAt: new Date(),
+        uid: user.uid,
+        email: user.email,
+        role: role,
+        createdAt: serverTimestamp(),
       });
 
+      // Step 4: Success message + redirect
       setMessage("✅ Account created successfully! Redirecting to login...");
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
+      console.error("Signup error:", error);
       setMessage("❌ " + error.message);
     } finally {
       setLoading(false);
@@ -46,7 +54,6 @@ export default function Signup() {
         transition={{ duration: 0.6 }}
         className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 border border-gray-200"
       >
-        {/* Header */}
         <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent mb-2">
           Join Neutrino 🚀
         </h2>
@@ -54,9 +61,7 @@ export default function Signup() {
           Create your account to explore AI-powered experiences
         </p>
 
-        {/* Form */}
         <form onSubmit={handleSignup} className="space-y-5">
-          {/* Email */}
           <div className="relative">
             <FaEnvelope className="absolute top-3.5 left-3 text-gray-400" />
             <input
@@ -69,7 +74,6 @@ export default function Signup() {
             />
           </div>
 
-          {/* Password */}
           <div className="relative">
             <FaLock className="absolute top-3.5 left-3 text-gray-400" />
             <input
@@ -82,7 +86,6 @@ export default function Signup() {
             />
           </div>
 
-          {/* Role */}
           <div className="relative">
             <FaUserShield className="absolute top-3.5 left-3 text-gray-400" />
             <select
@@ -95,7 +98,6 @@ export default function Signup() {
             </select>
           </div>
 
-          {/* Submit */}
           <motion.button
             type="submit"
             disabled={loading}
@@ -109,7 +111,6 @@ export default function Signup() {
           </motion.button>
         </form>
 
-        {/* Message */}
         {message && (
           <p
             className={`mt-4 text-center font-medium ${
@@ -120,7 +121,6 @@ export default function Signup() {
           </p>
         )}
 
-        {/* Redirect */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}
           <button

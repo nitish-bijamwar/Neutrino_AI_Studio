@@ -9,7 +9,15 @@ const Button = ({ children, className, ...props }) => (
   </button>
 );
 
-const UseCaseCard = ({ title, description, id, imageUrl, onLearnMore }) => {
+const UseCaseCard = ({ title, description, id, imageUrl, onLearnMore, demoLink }) => {
+  const handleTryNow = () => {
+    if (demoLink && demoLink.startsWith("http")) {
+      window.open(demoLink, "_blank", "noopener,noreferrer");
+    } else {
+      alert("Demo not available for this use case.");
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -27,15 +35,16 @@ const UseCaseCard = ({ title, description, id, imageUrl, onLearnMore }) => {
         </div>
       )}
 
-      <h3 className="text-2xl font-bold text-gray-800 tracking-wide">
-        {title}
-      </h3>
+      <h3 className="text-2xl font-bold text-gray-800 tracking-wide">{title}</h3>
       <p className="text-gray-600 leading-relaxed">{description}</p>
 
       <div className="flex gap-3 mt-4">
         <Button onClick={onLearnMore}>Learn More</Button>
-        <Button className="bg-gray-100 text-gray-800 hover:bg-gray-200 shadow-sm">
-          Use Chatbot
+        <Button
+          onClick={handleTryNow}
+          className="bg-gray-100 text-gray-800 hover:bg-gray-200 shadow-sm"
+        >
+          Try now
         </Button>
       </div>
     </motion.div>
