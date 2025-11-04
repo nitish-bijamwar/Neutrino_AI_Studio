@@ -120,7 +120,7 @@
 // src/components/HomeContent.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCasesData } from "./useCasesData";
+import { useCasesData } from "./UseCasesData";
 import { motion } from "framer-motion";
 import { FaSearch } from "react-icons/fa";
 
@@ -233,7 +233,7 @@ export default function HomeContent() {
           onClick={handleSearch}
           className="bg-gradient-to-r from-purple-500 to-blue-500 px-8 py-4 rounded-full font-semibold text-lg text-white hover:from-purple-600 hover:to-blue-600 shadow-md transition-all"
         >
-          Explore Use Cases 🚀
+          Our Products 🚀
         </button>
       </motion.div>
     </div>

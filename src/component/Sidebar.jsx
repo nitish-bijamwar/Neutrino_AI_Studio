@@ -51,15 +51,9 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
             className="flex items-center gap-3 hover:text-purple-600 cursor-pointer"
           >
             <FaBriefcase className="text-purple-500" />
-            {isOpen && <span>Use Cases</span>}
+            {isOpen && <span>Our Products</span>}
           </li>
-          {/* <li
-            onClick={() => handleNavigation("/workspace")}
-            className="flex items-center gap-3 hover:text-purple-600 cursor-pointer"
-          >
-            <FaLayerGroup className="text-blue-500" />
-            {isOpen && <span>Workspace</span>}
-          </li> */}
+         
 
           <div className="border-t border-gray-200 my-3"></div>
 

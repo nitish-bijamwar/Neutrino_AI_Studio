@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { X, ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import observabilityPDF from "../assets/Observability.pdf";
 
 export default function UseCaseDetails({ useCase, onClose }) {
-  // 🎥 Track whether video player is open
   const [showVideo, setShowVideo] = useState(false);
 
   if (!useCase) return null;
@@ -41,6 +41,11 @@ export default function UseCaseDetails({ useCase, onClose }) {
     setShowVideo(false);
   };
 
+  // 📘 Documentation handler
+  const handleOpenDocumentation = () => {
+    window.open(observabilityPDF, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50 backdrop-blur-sm">
       <motion.div
@@ -59,7 +64,6 @@ export default function UseCaseDetails({ useCase, onClose }) {
         {/* 🎥 Video Mode */}
         {showVideo ? (
           <div className="relative w-full h-[360px] flex flex-col">
-            {/* ⬅️ Back Button */}
             <button
               onClick={handleBack}
               className="absolute top-2 left-2 bg-gray-800/70 text-white px-3 py-1 rounded-lg flex items-center gap-2 hover:bg-gray-900 transition z-10"
@@ -128,6 +132,7 @@ export default function UseCaseDetails({ useCase, onClose }) {
               </button>
 
               <button
+                onClick={handleOpenDocumentation}
                 className="flex-1 bg-purple-600 text-white font-semibold py-3 rounded-xl hover:bg-purple-700 transition"
               >
                 📘 Documentation

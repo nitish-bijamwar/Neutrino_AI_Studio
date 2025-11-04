@@ -29,17 +29,12 @@ export default function Navbar({ isSidebarOpen }) {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className={`fixed top-0 right-0 h-14 bg-white border-b border-gray-200 flex items-center justify-between px-6 z-10 transition-all duration-300 ${
+      className={`fixed top-0 right-0 h-14 bg-white border-b border-gray-200 flex items-center justify-end px-6 z-10 transition-all duration-300 ${
         isSidebarOpen
           ? "w-[calc(100%-16rem)] ml-64"
           : "w-[calc(100%-4rem)] ml-16"
       }`}
     >
-      {/* 🖤 Logo Section */}
-      <div className="flex items-center gap-2">
-        <img src="/bw-logo.png" alt="Company Logo" className="w-9 h-9 object-contain" />
-      </div>
-
       {/* 👤 User Info Section */}
       <div className="flex items-center gap-3 text-gray-700">
         <FaUserCircle size={26} className="text-gray-700" />
